@@ -17,8 +17,6 @@ def get_input():
 
 def get_input_new_account(param):
     print()
-    print("Account Creation:")
-    print()
     print(param, " : ", end="")
     return input()
 

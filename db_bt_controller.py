@@ -1,16 +1,6 @@
 import db_bt_model
 import db_bt_view
 
-
-def run():
-    #Call Class method to load sqlite data 
-    #db_bt_model.Account.load_datafile()
-    mainmenu()
-
-# TODO define separate login function
-def login():
-    pass
-
 def mainmenu():
     while True:
         db_bt_view.show_menu()
@@ -35,19 +25,17 @@ def mainmenu():
             #Gather account number and pin
             account = db_bt_view.get_account_details("Account Number")
             pin = db_bt_view.get_account_details("PIN")
-            #NEW: Create account object, pass account & pin
+            #Create account object, pass account & pin
             val_account = db_bt_model.Account(account, pin, "", "", "")
             #Call instance method 'validate'
             if not val_account.validate():
-                #Failed to find account
-                pass
-                #db_bt_view.get_failed_validate_msg()
+                #Failed to find account msg
+                db_bt_view.get_failed_validate_msg()
             else:
                 #Create account object, pass account
-                #load_account = db_bt_model.Account(account, "", "", "", "")
-                #Call instance method 'validate'
-                #db_bt_view.get_login_greeting(load_account.load_account_data())
-                pass
+                load_account = db_bt_model.Account(account, "", "", "", "")
+                #Call instance method 'load_account_data'
+                db_bt_view.get_login_greeting(load_account.load_account_data())
                 while True:
                     #New sub-menu
                     db_bt_view.show_op2_menu()
@@ -72,13 +60,9 @@ def mainmenu():
                         #Call instance method 'deposit' to add to bal for load_account object
                         db_bt_view.get_post_deposit_msg(amount, load_account.deposit(amount))                        
                     else:
-                        #Call Class method to save to json file 
-                        db_bt_model.Account.save_datafile()
                         return
         else:
-            #Call Class method to save to json file 
-            db_bt_model.Account.save_datafile()
             return
 
 if __name__ == "__main__":
-    run()
+    mainmenu()
